@@ -17,7 +17,7 @@ namespace Plaza.Repositories
     
     public class UserRepository: IRepository<User>
     {
-        private readonly IOptions<Settings> settings;
+        private readonly Settings settings;
         private readonly IMongoDatabase database;
         public IEnumerable<User> All()
         {
@@ -56,14 +56,14 @@ namespace Plaza.Repositories
 
         public UserRepository(IOptions<Settings> settings)
         {
-            this.settings = settings;
+            this.settings = settings.Value;
             database = Connect();
         }
 
         private IMongoDatabase Connect()
         {
-            var client = new MongoClient(settings.Value.MongoConnection);
-            var database = client.GetDatabase(settings.Value.Database);
+            var client = new MongoClient(settings.MongoConnection);
+            var database = client.GetDatabase(settings.Database);
 
             return database;
         }
