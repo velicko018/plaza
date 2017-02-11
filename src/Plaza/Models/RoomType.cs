@@ -26,5 +26,8 @@ namespace Plaza.Models
         [BsonElement("description")]
         public string Description { get; set; }
 
+        [BsonElement("rooms")]
+        public List<Room> Rooms { get; set; }
+
     }
 }

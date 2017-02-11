@@ -25,5 +25,8 @@ namespace Plaza.Models
 
         [BsonElement("phoneNumber")]
         public string PhoneNumber { get; set; }
+
+        [BsonElement("reservations")]
+        public List<Reservation> Reservations { get; set; }
     }
 }
