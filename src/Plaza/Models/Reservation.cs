@@ -10,8 +10,12 @@ namespace Plaza.Models
     public class Reservation
     {
         public ObjectId Id { get; set; }
-        public string UserId { get; set; }
-        public int RoomId { get; set; }
+
+        [BsonElement("user")]
+        public User User { get; set; }
+
+        [BsonElement("room")]
+        public Room Room { get; set; }
 
         [BsonElement("numberOfGuests")]
         public int NumberOfGuests { get; set; }

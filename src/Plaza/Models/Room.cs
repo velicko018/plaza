@@ -17,6 +17,10 @@ namespace Plaza.Models
         [BsonElement("roomFloor")]
         public int RoomFloor { get; set; }
 
-        public int RoomType { get; set; }
+        [BsonElement("roomType")]
+        public RoomType roomType{ get; set; }
+
+        [BsonElement("reservations")]
+        public List<Reservation> Reservations { get; set; }
     }
 }
