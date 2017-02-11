@@ -12,7 +12,7 @@ namespace Plaza.Models
         public ObjectId Id { get; set; }
 
         [BsonElement("roomNumber")]
-        public int RoomNumbere { get; set; }
+        public int RoomNumber { get; set; }
 
         [BsonElement("roomFloor")]
         public int RoomFloor { get; set; }
