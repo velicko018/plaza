@@ -20,7 +20,6 @@ namespace Plaza
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddJsonFile("config.json")  
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -33,8 +32,8 @@ namespace Plaza
             // Add framework services.
             services.AddMvc();
             services.AddOptions();
-            services.Configure<Settings>(Configuration.GetSection("Mongo"));
-            services.AddSingleton<IRepository<User>, UserRepository>();
+            services.Configure<Settings>(Configuration.GetSection("Settings"));
+            services.AddSingleton<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

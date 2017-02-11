@@ -17,15 +17,14 @@ namespace Plaza.Repositories
     
     public class UserRepository: IRepository<User>
     {
-        private readonly IOptions<Settings> settings;
+        private readonly Settings settings;
         private readonly IMongoDatabase database;
         public IEnumerable<User> All()
         {
             return database
                 .GetCollection<User>("users")
-                .Find(new BsonDocument())
+                .Find(x => true)
                 .ToList();
-
         }
 
         public User GetById(ObjectId id)
@@ -35,16 +34,16 @@ namespace Plaza.Repositories
                 .Single();
         }
 
-        public void Add(User t)
+        public void Add(User user)
         {
             database.GetCollection<User>("users")
-                .InsertOneAsync(t);
+                .InsertOneAsync(user);
         }
 
-        public void Update(User t)
+        public void Update(User user)
         {
             database.GetCollection<User>("users")
-                .ReplaceOne(x => x.Id == t.Id, t);
+                .ReplaceOne(x => x.Id == user.Id, user);
         }
 
         public bool Remove(ObjectId id)
@@ -56,14 +55,14 @@ namespace Plaza.Repositories
 
         public UserRepository(IOptions<Settings> settings)
         {
-            this.settings = settings;
+            this.settings = settings.Value;
             database = Connect();
         }
 
         private IMongoDatabase Connect()
         {
-            var client = new MongoClient(settings.Value.MongoConnection);
-            var database = client.GetDatabase(settings.Value.Database);
+            var client = new MongoClient(settings.MongoConnection);
+            var database = client.GetDatabase(settings.Database);
 
             return database;
         }
