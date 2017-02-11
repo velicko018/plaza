@@ -24,6 +24,6 @@ namespace Plaza.Models
         public string Password { get; set; }
 
         [BsonElement("phoneNumber")]
-        public double PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
