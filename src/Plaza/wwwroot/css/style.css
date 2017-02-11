@@ -849,7 +849,7 @@ ul.styled-list.list-star li:before {
   text-indent: -2px;
 }
 .mg-page-title {
-  padding-top: 70px;
+  padding-top: 120px;
   padding-bottom: 50px;
   background-image: url(../images/page-title.png);
   color: #fff;
