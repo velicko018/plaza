@@ -34,6 +34,10 @@ namespace Plaza
             services.AddOptions();
             services.Configure<Settings>(Configuration.GetSection("Settings"));
             services.AddSingleton<UserRepository>();
+            services.AddSingleton<ReservationRepository>();
+            services.AddSingleton<RoomRepository>();
+            services.AddSingleton<RoomTypeRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
