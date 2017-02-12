@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,6 +33,9 @@ namespace Plaza
             // Add framework services.
             services.AddMvc();
             services.AddOptions();
+            services.AddDistributedMemoryCache();
+            services.AddSession(x => x.IdleTimeout = TimeSpan.FromMinutes(10));
+            
             services.Configure<Settings>(Configuration.GetSection("Settings"));
             services.AddSingleton<UserRepository>();
             services.AddSingleton<ReservationRepository>();
@@ -57,6 +61,8 @@ namespace Plaza
             }
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

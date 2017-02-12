@@ -31,6 +31,7 @@ namespace Plaza.Models
         [BsonElement("password")]
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [BsonElement("phoneNumber")]

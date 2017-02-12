@@ -34,6 +34,13 @@ namespace Plaza.Repositories
                 .Single();
         }
 
+        public User GetUser(string email, string password)
+        {
+            return database.GetCollection<User>("users")
+                .Find(x => x.Email == email && x.Password == password)
+                .Single();
+        }
+
         public void Add(User user)
         {
             database.GetCollection<User>("users")
