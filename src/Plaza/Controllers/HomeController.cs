@@ -29,6 +29,26 @@ namespace Plaza.Controllers
             return View();
         }
 
+        public IActionResult Booking()
+        {
+            return View();
+        }
+
+        public IActionResult Rooms()
+        {
+            return View();
+        }
+
+        public IActionResult Room()
+        {
+            return View();
+        }
+
+        public IActionResult Gallery()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();
