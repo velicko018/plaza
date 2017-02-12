@@ -28,5 +28,8 @@ namespace Plaza.Models
 
         [BsonElement("reservations")]
         public List<Reservation> Reservations { get; set; }
+
+        [BsonElement("admin")]
+        public bool Admin { get; set; }
     }
 }
