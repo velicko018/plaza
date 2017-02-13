@@ -1,50 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyPlaza.Models;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using Plaza.Helpers;
+using Plaza.Models;
+using Plaza.Repositories;
 
-namespace MyPlaza.Controllers
+namespace Plaza.Controllers
 {
     public class RoomTypeController : Controller
     {
+        private RoomTypeRepository _roomTypeRepository;
+
+        public RoomTypeController(RoomTypeRepository roomTypeRepository)
+        {
+            _roomTypeRepository = roomTypeRepository;
+        }
 
         // GET: RoomType/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(ObjectId id)
         {
             try
             {
-                RoomType res = new RoomType(); ;
+                RoomType roomType = _roomTypeRepository.GetById(id); ;
 
-                return View("Edit", res);
+                return View("Edit", roomType);
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // POST: RoomType/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, RoomType res, FormCollection form)
+        public IActionResult Edit(int id, RoomType roomType, FormCollection form)
         {
             try
             {
+                _roomTypeRepository.Update(roomType);
+
                 return RedirectToAction("Admin", "Home", new { enty = "RoomType" });
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // GET: RoomType/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(ObjectId id)
         {
             try
             {
-                RoomType res = new RoomType(); ;
+                _roomTypeRepository.Remove(id);
+
                 return RedirectToAction("Admin", "Home", new { enty = "RoomType" });
             }
             catch
@@ -54,49 +67,52 @@ namespace MyPlaza.Controllers
         }
 
         // GET: RoomType/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View("Create");
         }
 
         // POST: RoomType/Create
         [HttpPost]
-        public ActionResult Create(RoomType res)
+        public IActionResult Create(RoomType roomType)
         {
             try
             {
+                _roomTypeRepository.Add(roomType);
+
                 return RedirectToAction("Admin", "Home", new { enty = "RoomType" });
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // GET: RoomType
-        public ActionResult List()
+        public IActionResult List()
         {
             try
             {
-                IEnumerable<RoomType> res = new List<RoomType>();
-                if (Request.IsAjaxRequest())
+                IEnumerable<RoomType> roomTypes = _roomTypeRepository.All();
+
+                if (AjaxRequestExtensions.IsAjaxRequest(Request))
                 {
-                    return PartialView("List", res);
+                    return PartialView("List", roomTypes);
                 }
                 else
                 {
-                    return View("List", res);
+                    return View("List", roomTypes);
                 }
             }
             catch (Exception e)
             {
-                if (Request.IsAjaxRequest())
+                if (AjaxRequestExtensions.IsAjaxRequest(Request))
                 {
-                    Session["Exception"] = e;
+                    HttpContext.Session.SetString("Exception", e.Message);
                     return PartialView("Error");
                 }
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
 

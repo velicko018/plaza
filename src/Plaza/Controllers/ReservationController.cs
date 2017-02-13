@@ -1,50 +1,61 @@
-﻿using System.Web.Mvc;
-using MyPlaza.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using Plaza.Helpers;
+using Plaza.Models;
+using Plaza.Repositories;
 
-namespace MyPlaza.Controllers
+namespace Plaza.Controllers
 {
     public class ReservationController : Controller
     {
+        private ReservationRepository _reservationRepository;
+
+        public ReservationController(ReservationRepository reservationRepository)
+        {
+            _reservationRepository = reservationRepository;
+        }
 
         // GET: Reservation/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(ObjectId id)
         {
             try
             {
-                Reservation res = new Reservation();;
+                Reservation reservation = _reservationRepository.GetById(id);
 
-                return View("Edit", res);
+                return View("Edit", reservation);
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // POST: Reservation/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Reservation res, FormCollection form)
+        public IActionResult Edit(int id, Reservation reservation, FormCollection form)
         {
             try
             {
+                _reservationRepository.Update(reservation);
                 return RedirectToAction("Admin", "Home", new { enty = "Reservation" });
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // GET: Reservation/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(ObjectId id)
         {
             try
             {
-                Reservation res = new Reservation();;
+                _reservationRepository.Remove(id);
                 return RedirectToAction("Admin", "Home", new { enty = "Reservation" });
             }
             catch
@@ -61,46 +72,46 @@ namespace MyPlaza.Controllers
 
         // POST: Reservation/Create
         [HttpPost]
-        public ActionResult Create(Reservation res)
+        public IActionResult Create(Reservation reservation)
         {
             try
             {
+                _reservationRepository.Add(reservation);
                 return RedirectToAction("Admin", "Home", new { enty = "Reservation" });
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // GET: Reservation
-        public ActionResult List()
+        public IActionResult List()
         {
             try
             {
-               IEnumerable< Reservation> res = new List<Reservation>();
-                if (Request.IsAjaxRequest())
+                IEnumerable<Reservation> reservations = _reservationRepository.All();
+
+                if (AjaxRequestExtensions.IsAjaxRequest(Request))
                 {
-                    return PartialView("List",res);
+                    return PartialView("List", reservations);
                 }
                 else
                 {
-                    return View("List", res);
+                    return View("List", reservations);
                 }
             }
             catch (Exception e)
             {
-                if (Request.IsAjaxRequest())
+                if (AjaxRequestExtensions.IsAjaxRequest(Request))
                 {
-                    Session["Exception"] = e;
+                    HttpContext.Session.SetString("Exception", e.Message);
                     return PartialView("Error");
                 }
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
-
         }
-    }
 
 }

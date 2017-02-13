@@ -43,6 +43,11 @@ namespace Plaza.Controllers
             return View();
         }
 
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Register(User user)
         {

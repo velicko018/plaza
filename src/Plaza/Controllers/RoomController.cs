@@ -12,7 +12,6 @@ using Plaza.Repositories;
 
 namespace Plaza.Controllers
 
-namespace MyPlaza.Controllers
 {
     public class RoomController : Controller
     {
@@ -40,7 +39,7 @@ namespace MyPlaza.Controllers
 
         // POST: Room/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Room room, FormCollection form)
+        public IActionResult Edit(int id, Room room, FormCollection form)
         {
             try
             {
@@ -56,7 +55,7 @@ namespace MyPlaza.Controllers
         }
 
         // GET: Room/Delete/5
-        public ActionResult Delete(ObjectId id)
+        public IActionResult Delete(ObjectId id)
         {
             try
             {
@@ -71,14 +70,14 @@ namespace MyPlaza.Controllers
         }
 
         // GET: Room/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View("Create");
         }
 
         // POST: Room/Create
         [HttpPost]
-        public ActionResult Create(Room room)
+        public IActionResult Create(Room room)
         {
             try
             {
@@ -94,7 +93,7 @@ namespace MyPlaza.Controllers
         }
 
         // GET: Room
-        public ActionResult List()
+        public IActionResult List()
         {
             try
             {
