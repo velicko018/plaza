@@ -4304,3 +4304,17 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
     max-width: 100%;
   }
 }
+
+/*my css*/ 
+
+.previewGallery {
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.74902);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 5;
+    display: none;
+}
+

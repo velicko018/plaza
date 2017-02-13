@@ -70,7 +70,28 @@
         <script src="~/js/jquery.shuffle.min.js" asp-append-version="true"></script>
 
         <script src="~/js/script.js" asp-append-version="true"></script>
+        <script>
+            $('.img_responsive').click(function () {
+                var x = $(this).attr('src');
+                $('#imageBoxNbp').css('background', 'url(' + x + ')');
+                $('previewGallery').css('display', 'block');
 
+            });
+            $('#closeImage').click(function () {
+                $('previewGallery').css('display', 'none');
+
+            });
+
+            var k = document.getElementsByClassName('img_responsive');
+            for (var i = 0; i < k.length; i++) {
+                k[i].onclick = function () {
+                    var x = this.attr('src');
+
+
+                }
+
+            }
+        </script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"

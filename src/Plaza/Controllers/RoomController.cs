@@ -11,8 +11,6 @@ using Plaza.Repositories;
 
 
 namespace Plaza.Controllers
-
-namespace MyPlaza.Controllers
 {
     public class RoomController : Controller
     {
