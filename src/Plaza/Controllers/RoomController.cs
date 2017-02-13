@@ -38,7 +38,7 @@ namespace Plaza.Controllers
 
         // POST: Room/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Room room, FormCollection form)
+        public IActionResult Edit(int id, Room room, FormCollection form)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Plaza.Controllers
         }
 
         // GET: Room/Delete/5
-        public ActionResult Delete(ObjectId id)
+        public IActionResult Delete(ObjectId id)
         {
             try
             {
@@ -69,14 +69,14 @@ namespace Plaza.Controllers
         }
 
         // GET: Room/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View("Create");
         }
 
         // POST: Room/Create
         [HttpPost]
-        public ActionResult Create(Room room)
+        public IActionResult Create(Room room)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Plaza.Controllers
         }
 
         // GET: Room
-        public ActionResult List()
+        public IActionResult List()
         {
             try
             {

@@ -71,23 +71,34 @@
 
         <script src="~/js/script.js" asp-append-version="true"></script>
         <script>
-            $('.img_responsive').click(function () {
-                var x = $(this).attr('src');
-                $('#imageBoxNbp').css('background', 'url(' + x + ')');
-                $('previewGallery').css('display', 'block');
+            //$('.img_responsive').click(function () {
+            //    var x = $(this).attr('src');
+            //    $('#imageBoxNbp').css('background', 'url(' + x + ')');
+            //    $('previewGallery').css('display', 'block');
 
-            });
-            $('#closeImage').click(function () {
-                $('previewGallery').css('display', 'none');
+            //});
+            //$('#closeImage').click(function () {
+            //    $('previewGallery').css('display', 'none');
 
-            });
+            //});
 
-            var k = document.getElementsByClassName('img_responsive');
+            var closeImg = document.getElementById('closeGalleryNbp');
+            closeImg.onclick = function () {
+                var wnd = document.getElementById('prevGalleryNbp');
+                wnd.style = "display:none;";
+
+            }
+
+            var k = document.getElementsByClassName('img-responsive');
             for (var i = 0; i < k.length; i++) {
                 k[i].onclick = function () {
-                    var x = this.attr('src');
-
-
+                    console.log("klik");
+                    var x = this.src;
+                    var cont = document.getElementById('imageBoxNbp');
+                    console.log(x);
+                    cont.src = x;
+                    var wnd = document.getElementById('prevGalleryNbp');
+                    wnd.style = "display:block;";
                 }
 
             }

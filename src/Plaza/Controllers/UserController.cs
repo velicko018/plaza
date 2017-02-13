@@ -1,50 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
-using MyPlaza.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using Plaza.Helpers;
+using Plaza.Models;
+using Plaza.Repositories;
 
-namespace MyPlaza.Controllers
+namespace Plaza.Controllers
 {
     public class UserController : Controller
     {
+        private UserRepository _userRepository;
 
+        public UserController(UserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(ObjectId id)
         {
             try
             {
-                User res = new User(); ;
+                User user = _userRepository.GetById(id);
 
-                return View("Edit", res);
+                return View("Edit", user);
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, User res, FormCollection form)
+        public IActionResult Edit(int id, User user, FormCollection form)
         {
             try
             {
+                _userRepository.Update(user);
+
                 return RedirectToAction("Admin", "Home", new { enty = "User" });
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(ObjectId id)
         {
             try
             {
-                User res = new User(); ;
+                _userRepository.Remove(id);
+
                 return RedirectToAction("Admin", "Home", new { enty = "User" });
             }
             catch
@@ -54,49 +66,52 @@ namespace MyPlaza.Controllers
         }
 
         // GET: User/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View("Create");
         }
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(User res)
+        public IActionResult Create(User user)
         {
             try
             {
+                _userRepository.Add(user);
+
                 return RedirectToAction("Admin", "Home", new { enty = "User" });
             }
             catch (Exception e)
             {
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
         }
 
         // GET: User
-        public ActionResult List()
+        public IActionResult List()
         {
             try
             {
-                IEnumerable<User> res = new List<User>();
-                if (Request.IsAjaxRequest())
+                IEnumerable<User> users = _userRepository.All();
+
+                if (AjaxRequestExtensions.IsAjaxRequest(Request))
                 {
-                    return PartialView("List", res);
+                    return PartialView("List", users);
                 }
                 else
                 {
-                    return View("List", res);
+                    return View("List", users);
                 }
             }
             catch (Exception e)
             {
-                if (Request.IsAjaxRequest())
+                if (AjaxRequestExtensions.IsAjaxRequest(Request))
                 {
-                    Session["Exception"] = e;
+                    HttpContext.Session.SetString("Exception", e.Message);
                     return PartialView("Error");
                 }
-                Session["Exception"] = e;
+                HttpContext.Session.SetString("Exception", e.Message);
                 return View("Error");
             }
 
