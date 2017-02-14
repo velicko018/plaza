@@ -40,8 +40,9 @@ namespace Plaza.Controllers
         {
             try
             {
+
                 _reservationRepository.Update(reservation);
-                return RedirectToAction("Admin", "Home", new { enty = "Reservation" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "Reservation"});
             }
             catch (Exception e)
             {
@@ -56,7 +57,7 @@ namespace Plaza.Controllers
             try
             {
                 _reservationRepository.Remove(id);
-                return RedirectToAction("Admin", "Home", new { enty = "Reservation" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "Reservation"});
             }
             catch
             {
@@ -77,7 +78,7 @@ namespace Plaza.Controllers
             try
             {
                 _reservationRepository.Add(reservation);
-                return RedirectToAction("Admin", "Home", new { enty = "Reservation" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "Reservation"});
             }
             catch (Exception e)
             {
@@ -113,5 +114,5 @@ namespace Plaza.Controllers
                 return View("Error");
             }
         }
-
+    }
 }

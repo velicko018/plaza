@@ -45,7 +45,7 @@ namespace Plaza.Controllers
             {
                 _roomRepository.Update(room);
 
-                return RedirectToAction("Admin", "Home", new { enty = "Room" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "Room" });
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace Plaza.Controllers
             {
                 _roomRepository.Remove(id);
 
-                return RedirectToAction("Admin", "Home", new { enty = "Room" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "Room" });
             }
             catch
             {
@@ -83,7 +83,7 @@ namespace Plaza.Controllers
             {
                 _roomRepository.Add(room);
 
-                return RedirectToAction("Admin", "Home", new { enty = "Room" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "Room" });
             }
             catch (Exception e)
             {

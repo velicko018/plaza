@@ -18,11 +18,11 @@ namespace Plaza.Controllers
             _userRepository = userRepository;
         }
         // GET: User/Edit/5
-        public IActionResult Edit(ObjectId id)
+        public IActionResult Edit(string id)
         {
             try
             {
-                User user = _userRepository.GetById(id);
+                User user = _userRepository.GetById(ObjectId.Parse(id));
 
                 return View("Edit", user);
             }
@@ -41,7 +41,7 @@ namespace Plaza.Controllers
             {
                 _userRepository.Update(user);
 
-                return RedirectToAction("Admin", "Home", new { enty = "User" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "User" });
             }
             catch (Exception e)
             {
@@ -51,13 +51,13 @@ namespace Plaza.Controllers
         }
 
         // GET: User/Delete/5
-        public IActionResult Delete(ObjectId id)
+        public IActionResult Delete(string id)
         {
             try
             {
-                _userRepository.Remove(id);
+                _userRepository.Remove(ObjectId.Parse(id));
 
-                return RedirectToAction("Admin", "Home", new { enty = "User" });
+                return RedirectToAction("Admin", "Home", new { });
             }
             catch
             {
@@ -79,7 +79,7 @@ namespace Plaza.Controllers
             {
                 _userRepository.Add(user);
 
-                return RedirectToAction("Admin", "Home", new { enty = "User" });
+                return RedirectToAction("Admin", "Home", new { MODEL = "User" });
             }
             catch (Exception e)
             {
