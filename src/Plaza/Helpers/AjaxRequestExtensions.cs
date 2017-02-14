@@ -14,7 +14,7 @@ namespace Plaza.Helpers
             {
                 throw new ArgumentNullException("request");
             }
-
+            
             return (request.Headers["X-Requested-With"] == "XMLHttpRequest") || ((request.Headers != null) && (request.Headers["X-Requested-With"] == "XMLHttpRequest"));
         }
   
