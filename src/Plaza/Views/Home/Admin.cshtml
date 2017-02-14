@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Admin Panel
+                    <small>@DateTime.Now</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        @Html.ActionLink("Home", "Index", "Home", new { }, new { })
+                    </li>
+                    <li class="active">@Html.ActionLink("Admin Panel", "Admin", "Home", new { enty = "" }, new { })</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="list-group">
+                    
+               @Html.ActionLink("Reservations", "List", "Reservation", null, new
+               {
+                   data_ajax = "true",
+                   data_ajax_method = "GET",
+                   data_ajax_mode = "replace",
+                   data_ajax_update = "#update-container"
+               })
+               @Html.ActionLink("Rooms", "List", "Room", null, new
+               {
+                   data_ajax = "true",
+                   data_ajax_method = "GET",
+                   data_ajax_mode = "replace",
+                   data_ajax_update = "#update-container"
+               })
+               @Html.ActionLink("RoomTypes", "List", "RoomType", null, new
+               {
+                   data_ajax = "true",
+                   data_ajax_method = "GET",
+                   data_ajax_mode = "replace",
+                   data_ajax_update = "#update-container"
+               })
+               @Html.ActionLink("Users", "List", "User", null, new
+               {
+                   data_ajax = "true",
+                   data_ajax_method = "GET",
+                   data_ajax_mode = "replace",
+                   data_ajax_update = "#update-container"
+               })
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div id="update-container">
+                    @*@if(String.IsNullOrEmpty(Context.Session.GetString("MODEL")))
+                    {
+                        string controller = Context.Session.GetString("MODEL");
+                        //Html.RenderAction("List", controller);
+                    }*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+@section scripts
+    {
+    <script type="text/javascript">
+
+$(document).ajaxStart(function () {
+    $('#loader').show();
+    $('#update-container').empty();
+});
+$(document).ajaxStop(function () {
+    $('#loader').hide();
+});
+
+$(document).ready(function () {
+    $('body').append('<div id="loader" style="display:none"><p><img src="../../Content/Images/Ajax/loader1.gif" alt="Loading..."/></p></div>');
+
+        $('#loader').css({
+            display: "none",
+            margin: "0px",
+            paddingLeft: '0px',
+            paddingRight: "0px",
+            paddingTop: "0px",
+            paddingBottom: "0px",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: "auto"
+        });
+});
+
+</script>
+}
+
